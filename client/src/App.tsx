@@ -1,7 +1,5 @@
-import React from 'react'
+import { RootNavigation } from "@/routes/RootNavigation";
 
 export default function App() {
-  return (
-    <div>App</div>
-  )
+  return <RootNavigation />;
 }
