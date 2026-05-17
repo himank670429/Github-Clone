@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "outDir": "dist", // where to put the compiled JS files
+    "rootDir": "./src", // explicitly set the root directory for source files
+    "target": "ES2020", // which level of JS support to target
+    "module": "commonjs" /* Specify what module code is generated. */,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "types": ["node", "express"],
+
+    "noImplicitAny": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "typeRoots": ["./node_modules/@types", "./types"],
+    "forceConsistentCasingInFileNames": true
+  },
+  "include": ["src"], // which files to compile
+  "exclude": ["node_modules"], // which files to skip
+  "strictPropertyInitialization": false
+}
