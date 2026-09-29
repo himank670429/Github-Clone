@@ -1,4 +1,3 @@
-from functools import lru_cache
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -33,10 +32,10 @@ ALLOWED_ORIGINS = settings.ALLOWED_ORIGINS
 
 
 __all__ = [
-    'settings',
-    "DATABASE_URL",
-    "JWT_SECRET_KEY",
-    "JWT_ALGORITHM",
-    "JWT_ACCESS_TOKEN_EXPIRE_MINUTES",
     "ALLOWED_ORIGINS",
+    "DATABASE_URL",
+    "JWT_ACCESS_TOKEN_EXPIRE_MINUTES",
+    "JWT_ALGORITHM",
+    "JWT_SECRET_KEY",
+    'settings',
 ]
