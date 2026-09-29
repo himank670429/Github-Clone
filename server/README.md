@@ -16,6 +16,27 @@ uv run uvicorn main:app --reload
 
 The default SQLite database is `server/github_clone.db`. Tables are created when the application starts.
 
+## Backend structure
+
+```text
+server/
+├── constants/                 # Shared application constants
+├── core/                      # Core application features
+│   └── auth/                  # Auth feature and its mini-structure
+│       ├── constants.py
+│       ├── controller.py
+│       ├── dtos/
+│       ├── models/
+│       ├── router.py
+│       ├── service.py
+│       └── utils.py
+├── dependencies/              # FastAPI dependency functions
+├── features/                  # Non-core features
+├── infrastucture/             # Third-party service connections
+│   └── database/
+└── utils/                     # Shared helper functions
+```
+
 ## Auth endpoints
 
 ### Register

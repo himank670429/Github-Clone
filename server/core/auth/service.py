@@ -2,9 +2,20 @@ from sqlalchemy import or_, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
-from app.core.security import create_access_token, hash_password, verify_password
-from app.models.user import User
-from app.schemas.auth import AuthResponse, LoginRequest, RegisterRequest, UserResponse
+from core.auth.constants import DUPLICATE_USER_MESSAGE
+from core.auth.dtos.auth import (
+    AuthResponse,
+    LoginRequest,
+    RegisterRequest,
+    UserResponse,
+)
+from core.auth.models.user import User
+from core.auth.utils import (
+    create_access_token,
+    hash_password,
+    normalize_identifier,
+    verify_password,
+)
 
 
 def register_user(db: Session, payload: RegisterRequest) -> UserResponse:
@@ -18,14 +29,14 @@ def register_user(db: Session, payload: RegisterRequest) -> UserResponse:
         db.commit()
     except IntegrityError as error:
         db.rollback()
-        raise ValueError("Username or email is already registered") from error
+        raise ValueError(DUPLICATE_USER_MESSAGE) from error
 
     db.refresh(user)
     return UserResponse.model_validate(user)
 
 
 def authenticate_user(db: Session, payload: LoginRequest) -> AuthResponse | None:
-    identifier = payload.username_or_email.strip()
+    identifier = normalize_identifier(payload.username_or_email)
     user = db.scalar(
         select(User).where(
             or_(User.username == identifier, User.email == identifier.lower())
