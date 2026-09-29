@@ -1,12 +1,11 @@
 from collections.abc import Generator
 
+from fastapi import Request
 from sqlalchemy.orm import Session
 
-from infrastucture.database.connection import SessionLocal
 
-
-def get_db() -> Generator[Session, None, None]:
-    db = SessionLocal()
+def get_db(request: Request) -> Generator[Session, None, None]:
+    db = request.app.state.db_session_maker()
     try:
         yield db
     finally:

@@ -5,13 +5,18 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from core.auth.router import router as auth_router
 from env import get_settings
-from infrastucture.database.connection import Base, engine
+from infrastucture.database.connection import get_db_engine, get_db_session_maker
 
 
 @asynccontextmanager
-async def lifespan(_: FastAPI):
-    Base.metadata.create_all(bind=engine)
-    yield
+async def lifespan(application: FastAPI):
+    engine = get_db_engine()
+    application.state.db_engine = engine
+    application.state.db_session_maker = get_db_session_maker(engine)
+    try:
+        yield
+    finally:
+        engine.dispose()
 
 
 settings = get_settings()
