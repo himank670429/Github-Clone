@@ -38,19 +38,33 @@ server/
 ├── constants/                 # Shared application constants
 ├── core/                      # Core application features
 │   └── auth/                  # Auth feature and its mini-structure
-│       ├── constants.py
-│       ├── controller.py
+│       ├── constants/
+│       ├── controller/
 │       ├── dtos/
 │       ├── models/
-│       ├── router.py
-│       ├── service.py
-│       └── utils.py
+│       ├── router/
+│       ├── service/
+│       └── utils/
 ├── dependencies/              # FastAPI dependency functions
 ├── features/                  # Non-core features
 ├── infrastucture/             # Third-party service connections
 │   └── database/
+├── register_router.py         # Versioning and central router registry
 └── utils/                     # Shared helper functions
 ```
+
+Feature routers register themselves with the central registry:
+
+```python
+from register_router import ApiVersion, register_router
+
+
+@register_router(ApiVersion.V1)
+class FeatureRouter:
+  ...
+```
+
+The application mounts all registered routers under their versioned `/api/{version}` prefix.
 
 ## Auth endpoints
 
