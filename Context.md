@@ -5,6 +5,7 @@
 This project is a simplified clone of a platform like GitHub, built to understand how a Git-based repository hosting system works internally.
 
 The goal is not to copy every feature, but to build a working system that supports the core developer workflow:
+
 - storing code
 - tracking changes
 - viewing history
@@ -28,6 +29,7 @@ The purpose of this project is to:
 The system is based on two main responsibilities:
 
 ### 1. Git handles code
+
 - All repositories are stored as Git repositories
 - Git manages:
   - commits
@@ -38,6 +40,7 @@ The system is based on two main responsibilities:
 ---
 
 ### 2. Backend handles logic
+
 - Authentication
 - Repository metadata
 - Access control (later)
@@ -48,13 +51,15 @@ The system is based on two main responsibilities:
 ## ⚙️ System Architecture
 
 ### Backend (FastAPI)
+
 - Handles APIs and business logic
 - Executes Git commands internally
 - Manages authentication and repositories
 
 ---
 
-### Database (PostgreSQL)
+### Database (SQLite for initial development)
+
 Stores only metadata:
 
 - Users
@@ -63,21 +68,24 @@ Stores only metadata:
 
 ⚠️ Important: Code is NOT stored in database
 
+The backend keeps the SQLite connection configurable through `DATABASE_URL`, so it can be moved to PostgreSQL later without changing the application layers.
+
 ---
 
 ### Git Storage
+
 - Repositories are stored as **bare Git repositories**
 - Example structure:
-    
-    ```
-    /repos/
-    └── {user}/
-    └── {repo}.git
-    ```
+  ```
+  /repos/
+  └── {user}/
+  └── {repo}.git
+  ```
 
 ---
 
 ### Frontend (React + Tailwind)
+
 - Handles user interface
 - Features:
   - Signup/Login
@@ -91,12 +99,14 @@ Stores only metadata:
 ## 🔑 Core Features (Sprint 1)
 
 ### Authentication
+
 - User signup (email + password)
 - User login
 
 ---
 
 ### Repository Management
+
 - Create repository
 - Public / Private visibility
 - List user repositories
@@ -104,6 +114,7 @@ Stores only metadata:
 ---
 
 ### Git Operations
+
 - Push code using Git CLI
 - Clone repository
 - Proper Git repo initialization
@@ -111,6 +122,7 @@ Stores only metadata:
 ---
 
 ### Repository Viewer (UI)
+
 - Browse files and folders
 - View file content (latest version)
 - View commit history:
@@ -143,12 +155,12 @@ Stores only metadata:
 
 A user should be able to:
 
-1. Sign up and log in  
-2. Create a repository  
-3. Push code using Git  
-4. Clone the repository  
-5. View files in UI  
-6. View commit history  
+1. Sign up and log in
+2. Create a repository
+3. Push code using Git
+4. Clone the repository
+5. View files in UI
+6. View commit history
 
 ---
 

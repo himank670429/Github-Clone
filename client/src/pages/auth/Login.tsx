@@ -44,6 +44,7 @@ export function Login() {
             onChange={formik.handleChange}
             inputMode="none"
             type="password"
+            showPasswordToggle
             name="password"
             aria-required
             
