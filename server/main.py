@@ -3,8 +3,8 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from core.api import router_registry
-from env import get_settings
+from routers import router_registry
+from env import ALLOWED_ORIGINS
 from infrastucture.database.connection import get_db_engine, get_db_session_maker
 
 
@@ -21,11 +21,10 @@ async def lifespan(application: FastAPI):
 
 def create_app() -> FastAPI:
 
-    settings = get_settings()
     app = FastAPI(title="GitHub Clone API", version="0.1.0", lifespan=lifespan)
     app.add_middleware(
         CORSMiddleware,
-        allow_origins=settings.cors_origin_list,
+        allow_origins=ALLOWED_ORIGINS,
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
