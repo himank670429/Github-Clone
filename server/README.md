@@ -14,7 +14,22 @@ Copy `.env.example` to `.env`, set a long `JWT_SECRET_KEY`, then start the API:
 uv run uvicorn main:app --reload
 ```
 
-The default SQLite database is `server/github_clone.db`. Tables are created when the application starts.
+The default SQLite database is `server/github_clone.db`. Its schema is managed by Alembic.
+
+Apply database migrations before starting the API:
+
+```bash
+uv run alembic upgrade head
+```
+
+All schema migrations live in `migrations/versions/`. To create a migration after changing a model:
+
+```bash
+uv run alembic revision --autogenerate -m "describe the change"
+uv run alembic upgrade head
+```
+
+The API lifespan opens the SQLAlchemy engine and session factory and disposes the engine on shutdown. It does not create tables directly.
 
 ## Backend structure
 
