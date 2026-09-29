@@ -49,22 +49,21 @@ server/
 ├── features/                  # Non-core features
 ├── infrastucture/             # Third-party service connections
 │   └── database/
-├── register_router.py         # Versioning and central router registry
+├── routers.py                 # Central router imports and versioning
 └── utils/                     # Shared helper functions
 ```
 
-Feature routers register themselves with the central registry:
+All core and misc feature routers are imported and versioned in `routers.py`:
 
 ```python
-from register_router import ApiVersion, register_router
+from core.auth.router import auth_router
+from routers import ApiVersion, registered_routers
 
 
-@register_router(ApiVersion.V1)
-class FeatureRouter:
-  ...
+registered_routers.append((auth_router, ApiVersion.V1))
 ```
 
-The application mounts all registered routers under their versioned `/api/{version}` prefix.
+The application mounts every entry under its versioned `/api/{version}` prefix.
 
 ## Auth endpoints
 

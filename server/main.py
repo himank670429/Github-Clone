@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from env import ALLOWED_ORIGINS
 from infrastucture.database.connection import get_db_engine, get_db_session_maker
-from routers import router_registry
+from routers import include_routers
 
 
 @asynccontextmanager
@@ -29,7 +29,7 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
-    router_registry.include_in(app)
+    include_routers(app)
     return app
 
 

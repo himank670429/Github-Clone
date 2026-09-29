@@ -11,10 +11,8 @@ from core.auth.dtos.auth import (
     UserResponse,
 )
 from dependencies.database import get_db
-from routers import ApiVersion, register_router
 
 
-@register_router(ApiVersion.V1)
 class AuthRouter:
     def __init__(self) -> None:
         self.router = APIRouter(prefix="/auth", tags=["auth"])
@@ -38,3 +36,4 @@ class AuthRouter:
         return self.controller.login(payload, db)
 
 
+auth_router = AuthRouter().router
