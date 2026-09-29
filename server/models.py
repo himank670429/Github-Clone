@@ -1,0 +1,1 @@
+from core.auth.models import *  # noqa: F401
