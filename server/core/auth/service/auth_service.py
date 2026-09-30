@@ -1,9 +1,9 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
+from core.auth.dtos.auth import RegisterRequest
 from core.auth.models import User
 
-from core.auth.dtos.auth import RegisterRequest
 
 class AuthService:
     def get_user_by_email(self, db: Session, email: str) -> User | None:

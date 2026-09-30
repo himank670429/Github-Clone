@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from env import ALLOWED_ORIGINS
-from infrastucture.database.connection import get_db_engine, get_db_session_maker
+from infrastructure.database.connection import get_db_engine, get_db_session_maker
 from routers import include_routers
 
 
