@@ -3,6 +3,9 @@ from logging.config import fileConfig
 from alembic import context
 from sqlalchemy import engine_from_config, pool
 
+# Registers all models on Base.metadata so autogenerate can detect them
+import models  # noqa: F401
+
 # load all models from modules
 # importing all the variables form config file
 from env import DATABASE_URL
@@ -22,6 +25,7 @@ if config.config_file_name is not None:
 
 
 target_metadata = Base.metadata
+
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
@@ -59,7 +63,7 @@ def run_migration_online() -> None:
 
     with connectable.connect() as connection:
         context.configure(
-            connection=connection, 
+            connection=connection,
             target_metadata=target_metadata,
         )
 
