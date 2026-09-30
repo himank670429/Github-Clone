@@ -29,6 +29,10 @@ uv run alembic revision --autogenerate -m "describe the change"
 uv run alembic upgrade head
 ```
 
+```bash
+uv run ruff check .
+```
+
 The API lifespan opens the SQLAlchemy engine and session factory and disposes the engine on shutdown. It does not create tables directly.
 
 ## Backend structure
