@@ -11,6 +11,7 @@ from decorators import rollback_on_error
 from dependencies.database import get_db
 
 from exceptions import ExceptionWithErrorCode
+from utils import Res
 
 class AuthController:
     def __init__(self, service: AuthService | None = None) -> None:
@@ -38,13 +39,18 @@ class AuthController:
             username=username,
             password=hashed_password
         )
+        
+        user = self.service.create_user(
+            db=db,
+            payload=payload
+        )
 
-        try:
-            user = self.service.create_user(
-                db=db,
-                payload=payload
-            )
-        except IntegrityError:
-            raise
-
-        return UserResponse.model_validate(user)
+        data = UserResponse(
+            id=user.id,
+            avatar_url=None,
+            biography=None,
+            created_at=user.created_at,
+            email=user.email,
+            username=user.username,
+        )
+        return Res.success('S-10001', data=data.model_dump())
