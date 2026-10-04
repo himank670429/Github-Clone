@@ -15,7 +15,7 @@ class AuthService:
     def create_user(
         self, db: Session, payload: RegisterRequest
     ) -> User:
-        user = User(username=payload.username, email=payload.email, password_hash=payload.password_hash)
+        user = User(username=payload.username, email=payload.email, password_hash=payload.password)
         db.add(user)
         db.commit()
         db.refresh(user)

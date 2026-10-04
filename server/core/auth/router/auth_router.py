@@ -9,13 +9,7 @@ class AuthRouter:
         self.router = APIRouter(prefix="/auth", tags=["auth"])
         self.controller = AuthController()
 
-        self.router.add_api_route(
-            "/register",
-            self.controller.register,
-            methods=["POST"],
-            response_model=UserResponse,
-            status_code=status.HTTP_201_CREATED,
-        )
+        self.router.post("/register")(self.controller.register)
 
 
 auth_router = AuthRouter().router
