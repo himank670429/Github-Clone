@@ -5,6 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from env import ALLOWED_ORIGINS
 from infrastructure.database.connection import get_db_engine, get_db_session_maker
+from middleware import ExceptionHandlerMiddleware
 from routers import include_routers
 
 
@@ -22,6 +23,11 @@ async def lifespan(application: FastAPI):
 def create_app() -> FastAPI:
 
     app = FastAPI(title="GitHub Clone API", version="0.1.0", lifespan=lifespan)
+    
+    # ==================== Middleware: Exception Handler ====================
+    app.add_middleware(ExceptionHandlerMiddleware)
+
+    # ==================== Middleware: CORS ====================
     app.add_middleware(
         CORSMiddleware,
         allow_origins=ALLOWED_ORIGINS,
@@ -29,6 +35,8 @@ def create_app() -> FastAPI:
         allow_methods=["*"],
         allow_headers=["*"],
     )
+
+    # ==================== Routers ====================
     include_routers(app)
     return app
 
